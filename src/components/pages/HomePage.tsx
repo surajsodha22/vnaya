@@ -1,4 +1,5 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
+import type React from "react";
 import {useNavigate} from "react-router-dom";
 import {motion} from "motion/react";
 import {Award, Ship, Building2, ArrowRight} from "lucide-react";
@@ -17,6 +18,12 @@ export function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [featuredCarouselIndex, setFeaturedCarouselIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(1);
+  // Drag + hover state for category carousel
+  const cardCarouselRef = useRef<HTMLDivElement | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStartX, setDragStartX] = useState(0);
+  const [dragDeltaX, setDragDeltaX] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
 
   const slides = [
     {
@@ -119,6 +126,60 @@ export function HomePage() {
       setFeaturedCarouselIndex(0);
     }
   }, [cardsPerView, productCategories.length, featuredCarouselIndex]);
+
+  // Auto-slide for category card carousel (pause on hover or drag)
+  useEffect(() => {
+    const total = Math.ceil(productCategories.length / cardsPerView) || 1;
+    if (total <= 1 || isHovering || isDragging) return;
+    const id = window.setInterval(() => {
+      setFeaturedCarouselIndex((current) => (current + 1) % total);
+    }, 4000);
+    return () => window.clearInterval(id);
+  }, [productCategories.length, cardsPerView, isHovering, isDragging]);
+
+  // Pointer handlers for drag-to-slide on category carousel
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    setDragStartX(e.clientX);
+    setDragDeltaX(0);
+    try {
+      (e.currentTarget as HTMLDivElement).setPointerCapture(e.pointerId);
+    } catch {
+      // no-op
+    }
+  };
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    setDragDeltaX(e.clientX - dragStartX);
+  };
+  const endDrag = (deltaX: number) => {
+    const containerWidth = cardCarouselRef.current?.offsetWidth || 1;
+    const threshold = Math.max(50, containerWidth * 0.15);
+    const total = Math.ceil(productCategories.length / cardsPerView) || 1;
+    if (Math.abs(deltaX) > threshold) {
+      if (deltaX < 0) {
+        setFeaturedCarouselIndex((current) => (current + 1) % total);
+      } else {
+        setFeaturedCarouselIndex((current) => (current - 1 + total) % total);
+      }
+    }
+    setIsDragging(false);
+    setDragDeltaX(0);
+  };
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    endDrag(dragDeltaX);
+    try {
+      (e.currentTarget as HTMLDivElement).releasePointerCapture(e.pointerId);
+    } catch {
+      // no-op
+    }
+  };
+  const handlePointerCancel = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    setDragDeltaX(0);
+  };
 
   return (
     <div>
@@ -305,10 +366,21 @@ export function HomePage() {
             </div>
 
             {/* Unified responsive carousel */}
-            <div className="overflow-hidden">
+            <div
+              className="overflow-hidden"
+              ref={cardCarouselRef}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerCancel}
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
+            >
               <div
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${featuredCarouselIndex * 100}%)` }}
+                className={`flex ${isDragging ? "" : "transition-transform duration-500 ease-in-out"}`}
+                style={{
+                  transform: `translateX(calc(-${featuredCarouselIndex * 100}% + ${dragDeltaX}px))`,
+                }}
               >
                 {categoryPages.map((page, pageIndex) => (
                   <div key={pageIndex} className="min-w-full px-1 sm:px-2">
@@ -316,7 +388,7 @@ export function HomePage() {
                       className="grid gap-6"
                       style={{ gridTemplateColumns: `repeat(${cardsPerView}, minmax(0, 1fr))` }}
                     >
-                      {page.map((category, index) => (
+                      {page.map((category: any, index: number) => (
                         <motion.button
                           key={category.title}
                           onClick={() => navigate(`/products/${category.slug}`)}
@@ -361,7 +433,7 @@ export function HomePage() {
                   key={idx}
                   className={`w-3 h-3 rounded-full border-2 ${idx === featuredCarouselIndex
                     ? "bg-[#f59e0b] border-[#f59e0b]"
-                    : "bg-white border-white/60 opacity-70"
+                    : "bg-gray-500 border-white/60 opacity-70"
                     } transition-all`}
                   onClick={() => setFeaturedCarouselIndex(idx)}
                   aria-label={`Go to slide ${idx + 1}`}

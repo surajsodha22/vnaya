@@ -1,4 +1,5 @@
-import {useMemo, useRef, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
+import type React from "react";
 import {useParams, useNavigate, Link} from "react-router-dom";
 import {motion} from "motion/react";
 import {ChevronRight, ChevronLeft, ArrowLeft} from "lucide-react";
@@ -33,6 +34,72 @@ export function ProductsPage() {
     container.scrollBy({left: direction * (cardWidth + gap), behavior: "smooth"});
   };
 
+  // Auto-scroll + drag state per section
+  const hoveringSetRef = useRef<Set<number>>(new Set());
+  const draggingSetRef = useRef<Set<number>>(new Set());
+  const dragStateRef = useRef<Record<
+    number,
+    {startX: number; scrollLeftStart: number}
+  >>({});
+
+  // Auto-advance each horizontal slider by one card every 4s, pause on hover/drag
+
+  // Pointer drag helpers for horizontal scroll
+  const onSliderPointerDown =
+    (sectionIndex: number) => (e: React.PointerEvent<HTMLDivElement>) => {
+      const container = sliderRefs.current[sectionIndex];
+      if (!container) return;
+      draggingSetRef.current.add(sectionIndex);
+      dragStateRef.current[sectionIndex] = {
+        startX: e.clientX,
+        scrollLeftStart: container.scrollLeft,
+      };
+      try {
+        container.setPointerCapture?.(e.pointerId);
+      } catch {
+        /* no-op */
+      }
+      container.classList.add("cursor-grabbing", "select-none");
+    };
+
+  const onSliderPointerMove =
+    (sectionIndex: number) => (e: React.PointerEvent<HTMLDivElement>) => {
+      if (!draggingSetRef.current.has(sectionIndex)) return;
+      const container = sliderRefs.current[sectionIndex];
+      if (!container) return;
+      const state = dragStateRef.current[sectionIndex];
+      const deltaX = e.clientX - state.startX;
+      container.scrollLeft = state.scrollLeftStart - deltaX;
+    };
+
+  const endDrag = (sectionIndex: number, e: React.PointerEvent<HTMLDivElement>) => {
+    if (!draggingSetRef.current.has(sectionIndex)) return;
+    const container = sliderRefs.current[sectionIndex];
+    draggingSetRef.current.delete(sectionIndex);
+    if (container) {
+      try {
+        container.releasePointerCapture?.((e as any).pointerId);
+      } catch {
+        /* no-op */
+      }
+      container.classList.remove("cursor-grabbing", "select-none");
+    }
+  };
+
+  const onSliderPointerUp =
+    (sectionIndex: number) => (e: React.PointerEvent<HTMLDivElement>) =>
+      endDrag(sectionIndex, e);
+  const onSliderPointerCancel =
+    (sectionIndex: number) => (e: React.PointerEvent<HTMLDivElement>) =>
+      endDrag(sectionIndex, e);
+
+  const onSliderMouseEnter = (sectionIndex: number) => () => {
+    hoveringSetRef.current.add(sectionIndex);
+  };
+  const onSliderMouseLeave = (sectionIndex: number) => () => {
+    hoveringSetRef.current.delete(sectionIndex);
+  };
+
   const handleCardClick = (item: any) => {
     setSelectedProduct(item);
     setIsDialogOpen(true);
@@ -52,6 +119,26 @@ export function ProductsPage() {
   }, [selectedCategory]);
   const headerImage =
     currentCategory?.heroImage || (categoryImages as any)[currentCategory?.id];
+
+  // Auto-advance each horizontal slider by one card every 4s, pause on hover/drag
+  useEffect(() => {
+    const sections = (currentCategory.sections || []) as Array<any>;
+    if (!sections.length) return;
+    const timers = sections.map((_, idx) =>
+      window.setInterval(() => {
+        if (
+          hoveringSetRef.current.has(idx) ||
+          draggingSetRef.current.has(idx)
+        ) {
+          return;
+        }
+        scrollSectionByCard(idx, 1);
+      }, 4000)
+    );
+    return () => {
+      timers.forEach((id) => window.clearInterval(id));
+    };
+  }, [currentCategory]);
 
   const bulletGroups = (
     item: any
@@ -203,19 +290,26 @@ export function ProductsPage() {
                         </button>
 
                         {/* Right control */}
-                        <button
+                        {/* <button
                           type="button"
                           aria-label="Next"
                           onClick={() => scrollSectionByCard(idx, 1)}
                           className="hidden sm:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white/30 shadow-md border border-gray-200 text-gray-700 hover:bg-gray-50"
                         >
                           <ChevronRight className="h-5 w-5" />
-                        </button>
+                        </button> */}
 
                         {/* Horizontal slider */}
                         <div
-                          ref={(el) => (sliderRefs.current[idx] = el)}
-                          className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide px-1"
+                          ref={(el) => { sliderRefs.current[idx] = el; }}
+                          className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide px-1 cursor-grab"
+                          onMouseEnter={onSliderMouseEnter(idx)}
+                          onMouseLeave={onSliderMouseLeave(idx)}
+                          onPointerDown={onSliderPointerDown(idx)}
+                          onPointerMove={onSliderPointerMove(idx)}
+                          onPointerUp={onSliderPointerUp(idx)}
+                          onPointerCancel={onSliderPointerCancel(idx)}
+                          onDragStart={(e) => e.preventDefault()}
                         >
                           {(section.items || []).map(
                             (item: any, productIdx: number) => (

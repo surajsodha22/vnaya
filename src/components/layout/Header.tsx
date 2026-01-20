@@ -177,13 +177,14 @@ export function Header() {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-8">
+            <nav className="hidden lg:flex items-center gap-8 z-9999">
               {menuItems.map((item) => (
                 <div key={item.path} className="relative">
                   {item.hasDropdown ? (
                     <div
                       onMouseEnter={() => setProductsOpen(true)}
                       onMouseLeave={() => setProductsOpen(false)}
+                      className=""
                     >
                       <Link
                         to={item.path}
