@@ -17,34 +17,68 @@ export function AboutPage() {
   const values = [
     {
       icon: Heart,
-      title: "Integrity",
+      title: "Transparent sourcing and quality control",
       description:
         "Honest, transparent business practices in every transaction and relationship.",
     },
     {
       icon: Award,
-      title: "Quality Excellence",
+      title: "Compliance with destination-market standards",
       description:
         "Uncompromising commitment to delivering premium products that exceed expectations.",
     },
     {
       icon: Users,
-      title: "Partnership",
+      title: "Reliable logistics and documentation support",
       description:
         "Building long-term relationships based on trust, reliability, and mutual growth.",
     },
     {
       icon: Lightbulb,
-      title: "Innovation",
+      title: "Long-term supply partnerships",
       description:
         "Continuously improving processes and embracing new solutions for better service.",
     },
   ];
 
-
+  const milestones = [
+    {
+      year: "2018",
+      title: "Company Founded",
+      description:
+        "VyanaGlobal established in Paris with a vision to bridge Indian agriculture with global markets.",
+    },
+    {
+      year: "2019",
+      title: "Mumbai Office Opens",
+      description:
+        "Launched on-ground sourcing operations across India with dedicated quality teams.",
+    },
+    {
+      year: "2021",
+      title: "ISO Certification",
+      description:
+        "Achieved ISO 22000 and HACCP certifications, reinforcing our quality standards.",
+    },
+    {
+      year: "2023",
+      title: "Organic Expansion",
+      description:
+        "Expanded into certified organic products and superfoods segment.",
+    },
+    {
+      year: "2024",
+      title: "Global Reach",
+      description:
+        "Now serving 25+ countries across Europe, Middle East, and Africa.",
+    },
+  ];
   const stats = [
     {number: "500+", label: "Verified Suppliers"},
-    {number: "20+", label: "Countries Served Across Europe, Middle East & Africa"},
+    {
+      number: "20+",
+      label: "Countries Served Across Europe, Middle East & Africa",
+    },
     {number: "500+", label: "Shipments Delivered Globally"},
     {number: "98%", label: "On-Time Delivery Rate"},
   ];
@@ -91,11 +125,15 @@ export function AboutPage() {
               className="max-w-3xl"
             >
               <h1 className="mb-6 text-5xl md:text-6xl font-bold">
-                <span className="text-[#1e3a5f] drop-shadow-[0_0_8px_rgba(255,255,255,0.9),0_0_16px_rgba(255,255,255,0.5)]">Vyana</span>
+                <span className="text-[#1e3a5f] drop-shadow-[0_0_8px_rgba(255,255,255,0.9),0_0_16px_rgba(255,255,255,0.5)]">
+                  Vyana
+                </span>
                 <span className="text-[#f59e0b]">Global</span>
               </h1>
               <p className="text-xl text-white/90 leading-relaxed">
-                A global export partner connecting India's food, agricultural, and healthcare products with international markets through quality, compliance, and reliability.
+                A global export partner connecting India's food, agricultural,
+                and healthcare products with international markets through
+                quality, compliance, and reliability.
               </p>
             </motion.div>
           </div>
@@ -112,32 +150,27 @@ export function AboutPage() {
               viewport={{once: true}}
               transition={{duration: 0.6}}
             >
-              <h2 className="text-[#1e3a5f] mb-6 text-3xl md:text-4xl font-bold">Our Story</h2>
+              <h2 className="text-[#1e3a5f] mb-6 text-3xl md:text-4xl font-bold">
+                Our Story
+              </h2>
               <div className="space-y-4 text-gray-700">
                 <p>
-                  VyanaGlobal was born from a simple observation: the world's
-                  demand for authentic, high-quality Indian agricultural
-                  products was growing, but the supply chain lacked transparency
-                  and reliability.
+                  VyanaGlobal is a trusted international trading and export
+                  company, specializing in food, agricultural, and healthcare
+                  products sourced from India. We partner with verified farmers,
+                  processors, and manufacturers to deliver export-ready products
+                  that meet global quality and regulatory standards
                 </p>
                 <p>
-                  Founded in Paris in 2018 by a team of trade veterans and
-                  agricultural specialists, we set out to build a bridge—not
-                  just between India and Europe, but between tradition and
-                  innovation, between local farmers and global markets.
+                  Our diversified portfolio spans multiple product categories,
+                  with flexible packaging, private-label solutions, and scalable
+                  supply programs tailored for international buyers.
                 </p>
                 <p>
-                  Today, we combine European business standards with deep Indian
-                  agricultural knowledge. Our dual-office structure allows us to
-                  maintain close relationships with both our sourcing partners
-                  in India and our clients across Europe, the Middle East, and
-                  Africa.
-                </p>
-                <p>
-                  Every product we export tells a story of careful cultivation,
-                  rigorous quality control, and sustainable practices. We're not
-                  just moving commodities—we're sharing India's agricultural
-                  heritage with the world.
+                  With operational presence in both <b>Europe and India</b>, we
+                  bridge reliable Indian sourcing with global market
+                  expectations; ensuring consistency, compliance, and dependable
+                  supply across diverse product categories
                 </p>
               </div>
             </motion.div>
@@ -175,9 +208,13 @@ export function AboutPage() {
               <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#1e3a5f]/10 to-[#f59e0b]/10 flex items-center justify-center mb-6">
                 <Target className="w-7 h-7 text-[#1e3a5f]" />
               </div>
-              <h2 className="text-[#1e3a5f] mb-4 text-2xl font-bold">Our Mission</h2>
+              <h2 className="text-[#1e3a5f] mb-4 text-2xl font-bold">
+                Our Mission
+              </h2>
               <p className="text-gray-700">
-                To source, process, and export high-quality Indian food, agricultural, and healthcare products, ensuring consistency, compliance, and reliability for international buyers.
+                To source, process, and export high-quality Indian food,
+                agricultural, and healthcare products, ensuring consistency,
+                compliance, and reliability for international buyers.
               </p>
             </motion.div>
 
@@ -191,9 +228,13 @@ export function AboutPage() {
               <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#f59e0b]/10 to-[#1e3a5f]/10 flex items-center justify-center mb-6">
                 <TrendingUp className="w-7 h-7 text-[#f59e0b]" />
               </div>
-              <h2 className="text-[#1e3a5f] mb-4 text-2xl font-bold">Our Vision</h2>
+              <h2 className="text-[#1e3a5f] mb-4 text-2xl font-bold">
+                Our Vision
+              </h2>
               <p className="text-gray-700">
-                To be the most trusted bridge between India's trusted producers and global markets, setting the standard for quality, innovation, and sustainable global trade.
+                To be the most trusted bridge between India's trusted producers
+                and global markets, setting the standard for quality,
+                innovation, and sustainable global trade.
               </p>
             </motion.div>
           </div>
@@ -210,10 +251,12 @@ export function AboutPage() {
             transition={{duration: 0.6}}
             className="text-center mb-12"
           >
-            <h2 className="text-[#1e3a5f] mb-4 text-3xl md:text-4xl font-bold">Our Core Values</h2>
+            <h2 className="text-[#1e3a5f] mb-4 text-3xl md:text-4xl font-bold">
+              Our Operating Model
+            </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              The principles that guide every decision we make and every
-              relationship we build
+              Our business model combines on-ground sourcing strength in India
+              with international market expertise in Europe, enabling:
             </p>
           </motion.div>
 
@@ -227,11 +270,15 @@ export function AboutPage() {
                 transition={{duration: 0.6, delay: index * 0.1}}
                 className="text-center bg-gradient-to-br from-white to-gray-50 rounded-xl p-6 hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-[#f59e0b]/30"
               >
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#1e3a5f]/10 to-[#f59e0b]/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <value.icon className="w-8 h-8 text-[#1e3a5f] group-hover:text-[#f59e0b] transition-colors" />
+                <div className="w-16 h-16 rounded-full border-gray-500 border bg-gradient-to-br from-[#1e3a5f]/10 to-[#f59e0b]/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <value.icon className="w-8 h-8 text-yellow-500 group-hover:text-[#f59e0b] transition-colors" />
                 </div>
-                <h3 className="text-[#1e3a5f] mb-3 font-semibold text-lg">{value.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{value.description}</p>
+                <h3 className="text-[#1e3a5f] mb-3 font-semibold text-lg">
+                  {value.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {value.description}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -239,7 +286,7 @@ export function AboutPage() {
       </section>
 
       {/* Our Operating Model */}
-      <section className="py-20 bg-gray-50">
+      {/* <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{opacity: 0, y: 20}}
@@ -248,9 +295,19 @@ export function AboutPage() {
             transition={{duration: 0.6}}
             className="text-center mb-12"
           >
-            <h2 className="text-[#1e3a5f] mb-4 text-3xl md:text-4xl font-bold">Our Operating Model</h2>
+            <h2 className="text-[#1e3a5f] mb-4 text-3xl md:text-4xl font-bold">
+              Our Operating Model
+            </h2>
             <p className="text-gray-600 max-w-3xl mx-auto mb-8">
-              Our business model combines <strong className="text-[#1e3a5f]">on-ground sourcing strength in India</strong> with <strong className="text-[#1e3a5f]">international market expertise in Europe</strong>, enabling:
+              Our business model combines{" "}
+              <strong className="text-[#1e3a5f]">
+                on-ground sourcing strength in India
+              </strong>{" "}
+              with{" "}
+              <strong className="text-[#1e3a5f]">
+                international market expertise in Europe
+              </strong>
+              , enabling:
             </p>
           </motion.div>
 
@@ -266,7 +323,9 @@ export function AboutPage() {
                 <div className="w-12 h-12 rounded-full bg-[#1e3a5f]/10 flex items-center justify-center mb-4">
                   <CheckCircle className="w-6 h-6 text-[#f59e0b]" />
                 </div>
-                <h3 className="text-[#1e3a5f] mb-2 font-semibold text-lg">Transparent sourcing and quality control</h3>
+                <h3 className="text-[#1e3a5f] mb-2 font-semibold text-lg">
+                  Transparent sourcing and quality control
+                </h3>
               </motion.div>
 
               <motion.div
@@ -279,7 +338,9 @@ export function AboutPage() {
                 <div className="w-12 h-12 rounded-full bg-[#f59e0b]/10 flex items-center justify-center mb-4">
                   <CheckCircle className="w-6 h-6 text-[#f59e0b]" />
                 </div>
-                <h3 className="text-[#1e3a5f] mb-2 font-semibold text-lg">Compliance with destination-market standards</h3>
+                <h3 className="text-[#1e3a5f] mb-2 font-semibold text-lg">
+                  Compliance with destination-market standards
+                </h3>
               </motion.div>
 
               <motion.div
@@ -292,7 +353,9 @@ export function AboutPage() {
                 <div className="w-12 h-12 rounded-full bg-[#1e3a5f]/10 flex items-center justify-center mb-4">
                   <CheckCircle className="w-6 h-6 text-[#f59e0b]" />
                 </div>
-                <h3 className="text-[#1e3a5f] mb-2 font-semibold text-lg">Reliable logistics and documentation support</h3>
+                <h3 className="text-[#1e3a5f] mb-2 font-semibold text-lg">
+                  Reliable logistics and documentation support
+                </h3>
               </motion.div>
 
               <motion.div
@@ -305,7 +368,9 @@ export function AboutPage() {
                 <div className="w-12 h-12 rounded-full bg-[#f59e0b]/10 flex items-center justify-center mb-4">
                   <CheckCircle className="w-6 h-6 text-[#f59e0b]" />
                 </div>
-                <h3 className="text-[#1e3a5f] mb-2 font-semibold text-lg">Long-term supply partnerships</h3>
+                <h3 className="text-[#1e3a5f] mb-2 font-semibold text-lg">
+                  Long-term supply partnerships
+                </h3>
               </motion.div>
             </div>
 
@@ -317,12 +382,13 @@ export function AboutPage() {
               className="mt-8 text-center"
             >
               <p className="text-gray-700 text-lg">
-                We focus on consistency, traceability, and buyer confidence across every shipment.
+                We focus on consistency, traceability, and buyer confidence
+                across every shipment.
               </p>
             </motion.div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Statistics */}
       <section className="py-16 bg-[#1e3a5f] text-white">
@@ -340,7 +406,9 @@ export function AboutPage() {
                 <div className="text-4xl md:text-5xl font-bold text-[#f59e0b] mb-2">
                   {stat.number}
                 </div>
-                <div className="text-white/80 text-sm md:text-base leading-tight">{stat.label}</div>
+                <div className="text-white/80 text-sm md:text-base leading-tight">
+                  {stat.label}
+                </div>
               </motion.div>
             ))}
           </div>
@@ -357,7 +425,9 @@ export function AboutPage() {
             transition={{duration: 0.6}}
             className="text-center mb-12"
           >
-            <h2 className="text-[#1e3a5f] mb-4 text-3xl md:text-4xl font-bold">Our Team</h2>
+            <h2 className="text-[#1e3a5f] mb-4 text-3xl md:text-4xl font-bold">
+              Our Team
+            </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               A diverse group of professionals united by a passion for quality
               and excellence
@@ -378,8 +448,12 @@ export function AboutPage() {
                   <CheckCircle className="w-6 h-6 text-[#f59e0b]" />
                 </div>
                 <div>
-                  <h3 className="text-[#1e3a5f] mb-2 font-semibold text-lg">{department.name}</h3>
-                  <p className="text-gray-600 leading-relaxed">{department.description}</p>
+                  <h3 className="text-[#1e3a5f] mb-2 font-semibold text-lg">
+                    {department.name}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {department.description}
+                  </p>
                 </div>
               </motion.div>
             ))}
@@ -421,9 +495,12 @@ export function AboutPage() {
             transition={{duration: 0.6}}
             className="text-center mb-12"
           >
-            <h2 className="text-[#1e3a5f] mb-4 text-3xl md:text-4xl font-bold">Why Partner With Us</h2>
+            <h2 className="text-[#1e3a5f] mb-4 text-3xl md:text-4xl font-bold">
+              Why Partner With Us
+            </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              What sets VyanaGlobal apart in the competitive world of Food and Agri Exports
+              What sets VyanaGlobal apart in the competitive world of Food and
+              Agri Exports
             </p>
           </motion.div>
 
@@ -435,12 +512,16 @@ export function AboutPage() {
               transition={{duration: 0.6}}
               className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl hover:scale-105 transition-all duration-300 border border-gray-100 hover:border-[#f59e0b]/30"
             >
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#1e3a5f]/10 to-[#f59e0b]/10 flex items-center justify-center mb-4">
-                <Globe className="w-8 h-8 text-[#1e3a5f]" />
+              <div className="w-14 h-14 rounded-full border-gray-500 border bg-gradient-to-br from-[#1e3a5f]/10 to-[#f59e0b]/10 flex items-center justify-center mb-4">
+                <Globe className="w-8 h-8 text-yellow-500" />
               </div>
-              <h3 className="text-[#1e3a5f] mb-3 font-semibold text-xl">Dual Presence</h3>
+              <h3 className="text-[#1e3a5f] mb-3 font-semibold text-xl">
+                Dual Presence
+              </h3>
               <p className="text-gray-600 leading-relaxed">
-                European base in Paris and on-ground sourcing operations in India help us bridge markets efficiently, delivering consistent quality and timely supply.
+                European base in Paris and on-ground sourcing operations in
+                India help us bridge markets efficiently, delivering consistent
+                quality and timely supply.
               </p>
             </motion.div>
 
@@ -451,12 +532,16 @@ export function AboutPage() {
               transition={{duration: 0.6, delay: 0.1}}
               className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl hover:scale-105 transition-all duration-300 border border-gray-100 hover:border-[#f59e0b]/30"
             >
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#f59e0b]/10 to-[#1e3a5f]/10 flex items-center justify-center mb-4">
-                <Award className="w-8 h-8 text-[#f59e0b]" />
+              <div className="w-14 h-14 rounded-full border-gray-500 border bg-gradient-to-br from-[#f59e0b]/10 to-[#1e3a5f]/10 flex items-center justify-center mb-4">
+                <Award className="w-8 h-8 text-yellow-500" />
               </div>
-              <h3 className="text-[#1e3a5f] mb-3 font-semibold text-xl">Quality First</h3>
+              <h3 className="text-[#1e3a5f] mb-3 font-semibold text-xl">
+                Quality First
+              </h3>
               <p className="text-gray-600 leading-relaxed">
-                Certified suppliers, lab-tested samples, and stringent quality checks ensure every shipment meets international standards and buyer expectations.
+                Certified suppliers, lab-tested samples, and stringent quality
+                checks ensure every shipment meets international standards and
+                buyer expectations.
               </p>
             </motion.div>
 
@@ -467,12 +552,16 @@ export function AboutPage() {
               transition={{duration: 0.6, delay: 0.2}}
               className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl hover:scale-105 transition-all duration-300 border border-gray-100 hover:border-[#f59e0b]/30"
             >
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#1e3a5f]/10 to-[#f59e0b]/10 flex items-center justify-center mb-4">
-                <Users className="w-8 h-8 text-[#1e3a5f]" />
+              <div className="w-14 h-14 rounded-full border-gray-500 border bg-gradient-to-br from-[#1e3a5f]/10 to-[#f59e0b]/10 flex items-center justify-center mb-4">
+                <Users className="w-8 h-8 text-yellow-500" />
               </div>
-              <h3 className="text-[#1e3a5f] mb-3 font-semibold text-xl">Customer-Centric Partnership</h3>
+              <h3 className="text-[#1e3a5f] mb-3 font-semibold text-xl">
+                Customer-Centric Partnership
+              </h3>
               <p className="text-gray-600 leading-relaxed">
-                We don't just deliver products, we build lasting relationships with tailored solutions, flexible packaging, and dedicated support to meet your business needs every step of the way.
+                We don't just deliver products, we build lasting relationships
+                with tailored solutions, flexible packaging, and dedicated
+                support to meet your business needs every step of the way.
               </p>
             </motion.div>
           </div>
@@ -480,7 +569,7 @@ export function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-[#1e3a5f] to-[#24446c] text-white relative overflow-hidden">
+      <section className="py-16 bg-gradient-to-r from-[#1e3a5f] to-[#24446c] text-white relative overflow-hidden mb-16">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%221%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E')]"></div>
         </div>
@@ -492,7 +581,9 @@ export function AboutPage() {
             transition={{duration: 0.6}}
             className="text-center"
           >
-            <h2 className="mb-4 text-3xl md:text-4xl font-bold">Ready to Start Your Journey With Us?</h2>
+            <h2 className="mb-4 text-3xl md:text-4xl font-bold">
+              Ready to Start Your Journey With Us?
+            </h2>
             <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
               Experience the VyanaGlobal difference—where quality meets
               reliability, and partnerships thrive.
@@ -507,7 +598,7 @@ export function AboutPage() {
               <Button
                 onClick={() => navigate("/contact")}
                 variant="outline"
-                className="border-2 border-white text-white hover:bg-white hover:text-[#1e3a5f] px-8 py-6 text-lg font-semibold transition-all duration-300 hover:scale-105"
+                className="border-2 border-white text-gray-500 hover:bg-white hover:text-[#1e3a5f] px-8 py-6 text-lg font-semibold transition-all duration-300 hover:scale-105"
               >
                 Get in Touch
               </Button>

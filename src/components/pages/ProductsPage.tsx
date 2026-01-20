@@ -39,7 +39,7 @@ export function ProductsPage() {
   const draggingSetRef = useRef<Set<number>>(new Set());
   const dragStateRef = useRef<Record<
     number,
-    {startX: number; scrollLeftStart: number}
+    {startX: number; scrollLeftStart: number; hasDragged: boolean}
   >>({});
 
   // Auto-advance each horizontal slider by one card every 4s, pause on hover/drag
@@ -49,41 +49,53 @@ export function ProductsPage() {
     (sectionIndex: number) => (e: React.PointerEvent<HTMLDivElement>) => {
       const container = sliderRefs.current[sectionIndex];
       if (!container) return;
-      draggingSetRef.current.add(sectionIndex);
       dragStateRef.current[sectionIndex] = {
         startX: e.clientX,
         scrollLeftStart: container.scrollLeft,
+        hasDragged: false,
       };
-      try {
-        container.setPointerCapture?.(e.pointerId);
-      } catch {
-        /* no-op */
-      }
-      container.classList.add("cursor-grabbing", "select-none");
     };
 
   const onSliderPointerMove =
     (sectionIndex: number) => (e: React.PointerEvent<HTMLDivElement>) => {
-      if (!draggingSetRef.current.has(sectionIndex)) return;
       const container = sliderRefs.current[sectionIndex];
       if (!container) return;
       const state = dragStateRef.current[sectionIndex];
+      if (!state) return;
       const deltaX = e.clientX - state.startX;
+      // Only enter "dragging" mode after a small threshold
+      if (!state.hasDragged && Math.abs(deltaX) > 5) {
+        state.hasDragged = true;
+        draggingSetRef.current.add(sectionIndex);
+        try {
+          container.setPointerCapture?.(e.pointerId);
+        } catch {
+          /* no-op */
+        }
+        container.classList.add("cursor-grabbing", "select-none");
+      }
+      if (!state.hasDragged) {
+        // Ignore micro movements to preserve click behavior
+        return;
+      }
       container.scrollLeft = state.scrollLeftStart - deltaX;
     };
 
   const endDrag = (sectionIndex: number, e: React.PointerEvent<HTMLDivElement>) => {
-    if (!draggingSetRef.current.has(sectionIndex)) return;
     const container = sliderRefs.current[sectionIndex];
-    draggingSetRef.current.delete(sectionIndex);
-    if (container) {
-      try {
-        container.releasePointerCapture?.((e as any).pointerId);
-      } catch {
-        /* no-op */
+    const state = dragStateRef.current[sectionIndex];
+    if (draggingSetRef.current.has(sectionIndex)) {
+      draggingSetRef.current.delete(sectionIndex);
+      if (container) {
+        try {
+          container.releasePointerCapture?.((e as any).pointerId);
+        } catch {
+          /* no-op */
+        }
+        container.classList.remove("cursor-grabbing", "select-none");
       }
-      container.classList.remove("cursor-grabbing", "select-none");
     }
+    if (state) state.hasDragged = false;
   };
 
   const onSliderPointerUp =
@@ -279,36 +291,38 @@ export function ProductsPage() {
                         {section.subtitle}
                       </h3>
                       <div className="relative">
-                        {/* Left control */}
+                        {/* Simple & Responsive Horizontal Scroll Controls */}
                         <button
                           type="button"
                           aria-label="Previous"
                           onClick={() => scrollSectionByCard(idx, -1)}
-                          className="hidden"
+                          className=" sm:flex items-center justify-center absolute left-2 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 text-gray-700 shadow hover:bg-gray-100 transition"
                         >
-                          <ChevronLeft className="h-5 w-5" />
+                          <ChevronLeft className="w-4 h-4 mx-auto" />
                         </button>
-
-                        {/* Right control */}
-                        {/* <button
+                        <button
                           type="button"
                           aria-label="Next"
                           onClick={() => scrollSectionByCard(idx, 1)}
-                          className="hidden sm:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white/30 shadow-md border border-gray-200 text-gray-700 hover:bg-gray-50"
+                          className="sm:flex items-center justify-center absolute right-2 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/80 text-gray-700 shadow hover:bg-gray-100 transition"
                         >
-                          <ChevronRight className="h-5 w-5" />
-                        </button> */}
+                          <ChevronRight className="w-4 h-4 mx-auto"  />
+                        </button>
+                        {/* On mobile: show swipe hint */}
+                        <div className="sm:hidden absolute left-1/2 bottom-2 -translate-x-1/2 text-xs text-gray-400 pointer-events-none select-none">
+                          Swipe to browse
+                        </div>
 
                         {/* Horizontal slider */}
                         <div
                           ref={(el) => { sliderRefs.current[idx] = el; }}
                           className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide px-1 cursor-grab"
-                          onMouseEnter={onSliderMouseEnter(idx)}
-                          onMouseLeave={onSliderMouseLeave(idx)}
+                          // onMouseEnter={onSliderMouseEnter(idx)}
+                          // onMouseLeave={onSliderMouseLeave(idx)}
                           onPointerDown={onSliderPointerDown(idx)}
-                          onPointerMove={onSliderPointerMove(idx)}
-                          onPointerUp={onSliderPointerUp(idx)}
-                          onPointerCancel={onSliderPointerCancel(idx)}
+                          // onPointerMove={onSliderPointerMove(idx)}
+                          // onPointerUp={onSliderPointerUp(idx)}
+                          // onPointerCancel={onSliderPointerCancel(idx)}
                           onDragStart={(e) => e.preventDefault()}
                         >
                           {(section.items || []).map(
@@ -427,7 +441,13 @@ export function ProductsPage() {
       </div>
 
       {/* Product Detail Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <Dialog
+        open={isDialogOpen}
+        onOpenChange={(open) => {
+          setIsDialogOpen(open);
+          if (!open) setSelectedProduct(null);
+        }}
+      >
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto scrollbar-hide">
           {selectedProduct && (
             <>
